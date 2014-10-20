@@ -15,8 +15,13 @@ using System.Windows.Shapes;
  
 namespace CoolGameLibrary
 {
+    /// <summary>
+    /// Перечисление типа игрока (X,Y)
+    /// </summary>
     public enum PlayerType { User,Computer}
-
+    /// <summary>
+    /// "Тип" победы
+    /// </summary>
     public enum WinType { Horizont_1, Horizont_2, Horizont_3, Vert_1, Vert_2, Vert_3,Diagon_1,Diagon_2,NULL }
 
     /// <summary>
@@ -150,20 +155,28 @@ namespace CoolGameLibrary
             return GetPoint(newPoint);
         }
 
-        // Добавить картинку
+        /// <summary>
+        /// Добавить картинку на полотно
+        /// </summary>
+        /// <param name="p">"Коректные" координаты"</param>
+        /// <param name="UserImage">Двумерный массив с картинками</param>
+        /// <param name="pt">"Тип" картинки</param>
+        /// <param name="myCanvas">Полотно для записи картинки</param>
         static public void AddImage(Point p, string[,] UserImage, PlayerType pt, Canvas myCanvas)
         {
-            // Загрузить картинку
             Image im = new Image();
             im.Source = new BitmapImage(new Uri(Game.GetImage(UserImage, pt), UriKind.Absolute));
-            // Установить координаты для картинки
             Canvas.SetLeft(im, p.X);
             Canvas.SetTop(im, p.Y);
-            // Добавить картинку
             myCanvas.Children.Add(im);
         }
 
-        // Проверка на выигрыш
+        /// <summary>
+        /// Проверка игровой карты на выигрыш
+        /// </summary>
+        /// <param name="map">Игровая карта</param>
+        /// <param name="i">Число обозначающее игрока(1 - человек, 2 - компьютер)</param>
+        /// <returns>"Тип" победы</returns>
         static public WinType CheckWin(int[,] map, int i)
         {
             // горизонт
@@ -181,7 +194,11 @@ namespace CoolGameLibrary
             return WinType.NULL;
         }
 
-        // Вернуть нужную картинку
+        /// <summary>
+        /// Картинка победы (перечёркивание)
+        /// </summary>
+        /// <param name="c">Полотно для внесения картинки</param>
+        /// <param name="wt">"Тип" победы</param>
         static public void GetImage(Canvas c, WinType wt)
         {
             Shape img;
@@ -225,7 +242,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 50);
                 Canvas.SetTop(img, 0);
-                // Добавить
                 c.Children.Add(img);
             }
             if (wt == WinType.Vert_2)
@@ -235,7 +251,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 160);
                 Canvas.SetTop(img, 0);
-                // Добавить
                 c.Children.Add(img);
             }
             if (wt == WinType.Vert_3)
@@ -245,7 +260,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 270);
                 Canvas.SetTop(img, 0);
-                // Добавить
                 c.Children.Add(img);
             }
             /*------------------ДИАГОНАЛЬ-----------------------------------*/
@@ -256,7 +270,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 0);
                 Canvas.SetRight(img, 0);
-                // Добавить
                 c.Children.Add(img);
             }
             if (wt == WinType.Diagon_2)
@@ -266,12 +279,14 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 //Canvas.SetLeft(img, X);
                 //Canvas.SetRight(img, Y);
-                // Добавить
                 c.Children.Add(img);
             }
         }
 
-        // ЗАполнить карту игры
+        /// <summary>
+        /// Заполнить карту игры
+        /// </summary>
+        /// <param name="g">"Карта" игры</param>
         static public void FillMap(out int[,] g)
         {
             g = new int[3, 3];
