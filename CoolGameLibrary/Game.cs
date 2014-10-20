@@ -67,7 +67,9 @@ namespace CoolGameLibrary
 
             int i = 0;
             int c = 0;
-            try{
+
+            try
+            {
                 DirectoryInfo dir = new DirectoryInfo(p + patch);
                 foreach (DirectoryInfo d in dir.GetDirectories())
                 {
@@ -79,12 +81,13 @@ namespace CoolGameLibrary
                     }
                     i++;
                 }
-            }catch(Exception e){
-
             }
-                
-            }           
+            catch (Exception e)
+            {
+
+            }    
         }
+        
 
         /// <summary>
         /// Расчёт правильных координат для добавления на экран рисунка
@@ -92,11 +95,11 @@ namespace CoolGameLibrary
         /// <param name="pt">Точка нажатия на экран(Х,Y)</param>
         /// <param name="Arr">Индексатор картинки</param>
         /// <returns>Возврат "Коректных" координат для вставки картинки</returns>
-        static public Point GetPoint(Point pt, out int[] Arr)
+        static public Point GetPoint(Point pt, out int[] ArrPoint)
         {
             Point po = new Point();
             // Индексатор для GameMap
-            int[] ArrPoint = new int[2];
+            ArrPoint = new int[2];
 
 
             if (pt.X > 0 && pt.X < 105) { po.X = 0; ArrPoint[0] = 0; }
@@ -106,8 +109,6 @@ namespace CoolGameLibrary
             if (pt.Y > 0 && pt.Y < 105) { po.Y = 0; ArrPoint[1] = 0; }
             else if (pt.Y > 105 && pt.Y < 210) { po.Y = 110; ArrPoint[1] = 1; }
             else if (pt.Y > 210 && pt.Y < 320) { po.Y = 220; ArrPoint[1] = 2; }
-
-            Arr = ArrPoint;
 
             return po;
         }
