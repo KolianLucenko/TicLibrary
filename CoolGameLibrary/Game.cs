@@ -67,9 +67,7 @@ namespace CoolGameLibrary
 
             int i = 0;
             int c = 0;
-
-            try
-            {
+            try{
                 DirectoryInfo dir = new DirectoryInfo(p + patch);
                 foreach (DirectoryInfo d in dir.GetDirectories())
                 {
@@ -81,11 +79,11 @@ namespace CoolGameLibrary
                     }
                     i++;
                 }
+            }catch(Exception e){
+
             }
-            catch (Exception e)
-            {
-                MessageBox.Show("Не правильный путь к картинкам");
-            }            
+                
+            }           
         }
 
         /// <summary>
