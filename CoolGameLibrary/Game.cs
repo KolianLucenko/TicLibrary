@@ -293,5 +293,23 @@ namespace CoolGameLibrary
                 for (int b = 0; b < 3; b++)
                     g[a, b] = 0;
         }
+
+        /// <summary>
+        /// Проверка на ничью
+        /// </summary>
+        /// <param name="X">Координата X в массиве "GameMap"</param>
+        /// <param name="Y">Координата Y в массиве "GameMap"</param>
+        /// <param name="GameMap">Двумерный массив с картой игры</param>
+        /// <returns></returns>
+        static public bool ChekingDeadHeat(int X, int Y,int[,] GameMap)
+        {
+            for (int i = 0; i < X; i++)
+                for (int c = 0; c < Y;c++)
+                    if(GameMap[X,Y]==0)
+                        return false;
+
+            return true;
+        }
+
     }
 }
