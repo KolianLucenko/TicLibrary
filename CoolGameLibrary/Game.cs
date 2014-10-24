@@ -298,14 +298,10 @@ namespace CoolGameLibrary
         /// <returns></returns>
         static public bool ChekingDeadHeat(int[,] GameMap)
         {
-            for (int i = 0; i < GameMap.GetLength(0) ; i++)
-                for (int j = 0; j < GameMap.GetLength(1); j++)
-                    if (GameMap[i, j] != 0)
+            for (int i = 0; i < 3; i++)
+                for (int c = 0; c <  3;c++)
+                    if(GameMap[i,c]==0) 
                         return false;
-            /*for (int i = 0; i < X; i++)
-                for (int c = 0; c < Y;c++)
-                    if(GameMap[X,Y]!=0) 
-                        return false;*/
 
             return true;
         }
