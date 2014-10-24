@@ -210,7 +210,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 0);
                 Canvas.SetTop(img, 50);
-                // Добавить
                 c.Children.Add(img);
             }
             if (wt == WinType.Horizont_2)
@@ -220,7 +219,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 0);
                 Canvas.SetTop(img, 160);
-                // Добавить
                 c.Children.Add(img);
             }
             if (wt == WinType.Horizont_3)
@@ -230,7 +228,6 @@ namespace CoolGameLibrary
                 img.StrokeThickness = 4;
                 Canvas.SetLeft(img, 0);
                 Canvas.SetTop(img, 270);
-                // Добавить
                 c.Children.Add(img);
             }
             /*------------------- ЕСЛИ ВЕРТИКАЛЬ----------------------------*/
@@ -297,19 +294,20 @@ namespace CoolGameLibrary
         /// <summary>
         /// Проверка на ничью
         /// </summary>
-        /// <param name="X">Координата X в массиве "GameMap"</param>
-        /// <param name="Y">Координата Y в массиве "GameMap"</param>
         /// <param name="GameMap">Двумерный массив с картой игры</param>
         /// <returns></returns>
-        static public bool ChekingDeadHeat(int X, int Y,int[,] GameMap)
+        static public bool ChekingDeadHeat(int[,] GameMap)
         {
-            for (int i = 0; i < X; i++)
-                for (int c = 0; c < Y;c++)
-                    if(GameMap[X,Y]==0)
+            for (int i = 0; i < GameMap.GetLength(0) ; i++)
+                for (int j = 0; j < GameMap.GetLength(1); j++)
+                    if (GameMap[i, j] != 0)
                         return false;
+            /*for (int i = 0; i < X; i++)
+                for (int c = 0; c < Y;c++)
+                    if(GameMap[X,Y]!=0) 
+                        return false;*/
 
             return true;
         }
-
     }
 }
