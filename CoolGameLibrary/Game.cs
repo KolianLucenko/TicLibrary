@@ -171,50 +171,26 @@ namespace CoolGameLibrary
                         TempRandIn.Add(new Point((double)a, (double)b));
 
             /*  ЛОГИКА  */
-            List<Point> TempLogIn = new List<Point>();
-
-            for(int i = 0;i<map.GetLength(0);i++){
-                if ((map[i, 0] == -1) && (map[i, 1] == -1) && (map[i, 2] == 0))
-                    TempLogIn.Add(new Point((double)i, (double)2));
-                if ((map[i, 0] == -1) && (map[i, 1] == 0) && (map[i, 2] == -1))
-                    TempLogIn.Add(new Point((double)i, (double)1));
-                if ((map[i, 0] == 0) && (map[i, 1] == -1) && (map[i, 2] == -1))
-                    TempLogIn.Add(new Point((double)i, (double)0));
-            }
-
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                if ((map[0, i] == -1) && (map[1, i] == -1) && (map[2, i] == 0))
-                    TempLogIn.Add(new Point((double)2, (double)i));
-                if ((map[0, i] == -1) && (map[1, i] == 0) && (map[2, i] == -1))
-                    TempLogIn.Add(new Point((double)1, (double)i));
-                if ((map[0, i] == 0) && (map[1, i] == -1) && (map[2, i] == -1))
-                    TempLogIn.Add(new Point((double)0, (double)i));
-            }
-
-            if ((map[0, 0] == -1) && (map[1, 1] == -1) && (map[2, 2] == 0))
-                TempLogIn.Add(new Point((double)2, (double)2));
-            if ((map[0, 0] == -1) && (map[1, 1] == 0) && (map[2, 2] == -1))
-                TempLogIn.Add(new Point((double)1, (double)1));
-            if ((map[0, 0] == 0) && (map[1, 1] == -1) && (map[2, 2] == -1))
-                TempLogIn.Add(new Point((double)0, (double)0));
-
-
-            if ((map[0, 2] == -1) && (map[1, 1] == -1) && (map[2, 0] == 0))
-                TempLogIn.Add(new Point((double)2, (double)0));
-            if ((map[0, 2] == -1) && (map[1, 1] == 0) && (map[2, 0] == -1))
-                TempLogIn.Add(new Point((double)1, (double)1));
-            if ((map[0, 2] == 0) && (map[1, 1] == -1) && (map[2, 0] == -1))
-                TempLogIn.Add(new Point((double)0, (double)0));
+            List<Point> TempCompLogIn = new List<Point>();
+            List<Point> TempUserLogIn = new List<Point>();
+            CheckGameMapOnWinTach(-1, ref TempCompLogIn, map);
+            CheckGameMapOnWinTach(1, ref TempUserLogIn, map);
+            
 
             /*  ВОЗВРАТ КООРДИНАТЫ */
             Point newPoint;
             Random r = new Random();
-            if (TempLogIn.Count > 0)
+            if (TempUserLogIn.Count > 0)
+            {
+                newPoint = TempUserLogIn[r.Next(0, TempUserLogIn.Count - 1)];
+                map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                return GetPoint(newPoint);
+            }
+            else if (TempCompLogIn.Count > 0)
             {
                 if (r.Next(0, 100) <= 80)
                 {
-                    newPoint = TempLogIn[r.Next(0, TempLogIn.Count - 1)];
+                    newPoint = TempCompLogIn[r.Next(0, TempCompLogIn.Count - 1)];
                     map[(int)newPoint.X, (int)newPoint.Y] = -1;
                     return GetPoint(newPoint);
                 }
@@ -224,7 +200,6 @@ namespace CoolGameLibrary
                     map[(int)newPoint.X, (int)newPoint.Y] = -1;
                     return GetPoint(newPoint);
                 }
-                
             }
             else
             {
@@ -232,6 +207,48 @@ namespace CoolGameLibrary
                 map[(int)newPoint.X, (int)newPoint.Y] = -1;
                 return GetPoint(newPoint);
             }
+        }
+
+        /// <summary>
+        /// Сбор Point(ов) в случае двух совпадений на ряд
+        /// </summary>
+        /// <param name="num">Число для сравнения</param>
+        /// <param name="LP">Лист Point(ов)</param>
+        /// <param name="map">Игровая карта</param>
+        static void CheckGameMapOnWinTach(int num,ref List<Point> LP,int[,] map){
+            for(int i = 0;i<map.GetLength(0);i++){
+                if ((map[i, 0] == num) && (map[i, 1] == num) && (map[i, 2] == 0))
+                    LP.Add(new Point((double)i, (double)2));
+                if ((map[i, 0] == num) && (map[i, 1] == 0) && (map[i, 2] == num))
+                    LP.Add(new Point((double)i, (double)1));
+                if ((map[i, 0] == 0) && (map[i, 1] == num) && (map[i, 2] == num))
+                    LP.Add(new Point((double)i, (double)0));
+            }
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                if ((map[0, i] == num) && (map[1, i] == num) && (map[2, i] == 0))
+                    LP.Add(new Point((double)2, (double)i));
+                if ((map[0, i] == num) && (map[1, i] == 0) && (map[2, i] == num))
+                    LP.Add(new Point((double)1, (double)i));
+                if ((map[0, i] == 0) && (map[1, i] == num) && (map[2, i] == num))
+                    LP.Add(new Point((double)0, (double)i));
+            }
+
+            if ((map[0, 0] == num) && (map[1, 1] == num) && (map[2, 2] == 0))
+                LP.Add(new Point((double)2, (double)2));
+            if ((map[0, 0] == num) && (map[1, 1] == 0) && (map[2, 2] == num))
+                LP.Add(new Point((double)1, (double)1));
+            if ((map[0, 0] == 0) && (map[1, 1] == num) && (map[2, 2] == num))
+                LP.Add(new Point((double)0, (double)0));
+
+
+            if ((map[0, 2] == num) && (map[1, 1] == num) && (map[2, 0] == 0))
+                LP.Add(new Point((double)2, (double)0));
+            if ((map[0, 2] == num) && (map[1, 1] == 0) && (map[2, 0] == num))
+                LP.Add(new Point((double)1, (double)1));
+            if ((map[0, 2] == 0) && (map[1, 1] == num) && (map[2, 0] == num))
+                LP.Add(new Point((double)0, (double)0));
         }
 
         /// <summary>
