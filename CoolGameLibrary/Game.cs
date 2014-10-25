@@ -209,10 +209,9 @@ namespace CoolGameLibrary
 
             /*  ВОЗВРАТ КООРДИНАТЫ */
             Point newPoint;
+            Random r = new Random();
             if (TempLogIn.Count > 0)
             {
-                Random r = new Random();
-
                 if(r.Next(0,100) <=60){
                     newPoint = TempLogIn[r.Next(0, TempLogIn.Count - 1)];
                     map[(int)newPoint.X, (int)newPoint.Y] = -1;
