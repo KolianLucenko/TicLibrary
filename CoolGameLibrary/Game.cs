@@ -214,7 +214,6 @@ namespace CoolGameLibrary
             {
                 if (r.Next(0, 100) <= 80)
                 {
-                    MessageBox.Show("asd");
                     newPoint = TempLogIn[r.Next(0, TempLogIn.Count - 1)];
                     map[(int)newPoint.X, (int)newPoint.Y] = -1;
                     return GetPoint(newPoint);
