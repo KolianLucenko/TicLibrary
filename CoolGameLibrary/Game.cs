@@ -137,7 +137,7 @@ namespace CoolGameLibrary
         /// </summary>
         /// <param name="map">Игровая карта(3 на 3)</param>
         /// <returns>Координаты для вставки картинки</returns>
-        static public Point ComputerRun(ref int[,] map)
+        static public Point EaseComputerRun(ref int[,] map)
         {
             List<Point> TempIn = new List<Point>();
             for (int a = 0; a < 3; a++)
@@ -152,6 +152,85 @@ namespace CoolGameLibrary
             map[(int)newPoint.X, (int)newPoint.Y] = -1;
 
             return GetPoint(newPoint);
+        }
+
+        /// <summary>
+        /// Поиск случайной или НЕ случайно позиции на игровой карте (3 на 3)
+        /// </summary>
+        /// <param name="map">Игровая карта(3 на 3)</param>
+        /// <returns>Координаты для вставки картинки</returns>
+        static public Point NormalComputerRun(ref int[,] map)
+        {
+            /*  ВСЕ ПУСТЫЕ  */
+            List<Point> TempRandIn = new List<Point>();
+
+            for (int a = 0; a < map.GetLength(0); a++)
+                for (int b = 0; b < map.GetLength(1); b++)
+                    if (map[a, b] == 0)
+                        // Добавить во временной индексатор
+                        TempRandIn.Add(new Point((double)a, (double)b));
+
+            /*  ЛОГИКА  */
+            List<Point> TempLogIn = new List<Point>();
+
+            for(int i = 0;i<map.GetLength(0);i++){
+                if ((map[i, 0] != 0) && (map[i, 1] != 0) && (map[i, 2] == 0))
+                    TempLogIn.Add(new Point((double)i, (double)2));
+                if ((map[i, 0] != 0) && (map[i, 1] == 0) && (map[i, 2] != 0))
+                    TempLogIn.Add(new Point((double)i, (double)1));
+                if ((map[i, 0] == 0) && (map[i, 1] != 0) && (map[i, 2] != 0))
+                    TempLogIn.Add(new Point((double)i, (double)0));
+            }
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                if ((map[0, i] != 0) && (map[1, i] != 0) && (map[2, i] == 0))
+                    TempLogIn.Add(new Point((double)2, (double)i));
+                if ((map[0, i] != 0) && (map[1, i] == 0) && (map[2, i] != 0))
+                    TempLogIn.Add(new Point((double)1, (double)i));
+                if ((map[0, i] == 0) && (map[1, i] != 0) && (map[2, i] != 0))
+                    TempLogIn.Add(new Point((double)0, (double)i));
+            }
+
+            if ((map[0, 0] != 0) && (map[1, 1] != 0) && (map[2, 2] == 0))
+                TempLogIn.Add(new Point((double)2, (double)2));
+            if ((map[0, 0] != 0) && (map[1, 1] == 0) && (map[2, 2] != 0))
+                TempLogIn.Add(new Point((double)1, (double)1));
+            if ((map[0, 0] == 0) && (map[1, 1] != 0) && (map[2, 2] != 0))
+                TempLogIn.Add(new Point((double)0, (double)0));
+
+
+            if ((map[0, 2] != 0) && (map[1, 1] != 0) && (map[2, 0] == 0))
+                TempLogIn.Add(new Point((double)2, (double)0));
+            if ((map[0, 2] != 0) && (map[1, 1] == 0) && (map[2, 0] != 0))
+                TempLogIn.Add(new Point((double)1, (double)1));
+            if ((map[0, 2] == 0) && (map[1, 1] != 0) && (map[2, 0] != 0))
+                TempLogIn.Add(new Point((double)0, (double)0));
+
+            /*  ВОЗВРАТ КООРДИНАТЫ */
+            Point newPoint;
+            if (TempLogIn.Count > 0)
+            {
+                Random r = new Random();
+
+                if(r.Next(0,100) <=60){
+                    newPoint = TempLogIn[r.Next(0, TempLogIn.Count - 1)];
+                    map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                    return GetPoint(newPoint);
+                }
+                else
+                {
+                    newPoint = TempRandIn[r.Next(0, TempRandIn.Count - 1)];
+                    map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                    return GetPoint(newPoint);
+                }
+            }
+            else
+            {
+                newPoint = TempRandIn[r.Next(0, TempRandIn.Count - 1)];
+                map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                return GetPoint(newPoint);
+            }
         }
 
         /// <summary>
@@ -298,8 +377,8 @@ namespace CoolGameLibrary
         /// <returns></returns>
         static public bool ChekingDeadHeat(int[,] GameMap)
         {
-            for (int i = 0; i < 3; i++)
-                for (int c = 0; c <  3;c++)
+            for (int i = 0; i < GameMap.GetLength(0); i++)
+                for (int c = 0; c < GameMap.GetLength(1); c++)
                     if(GameMap[i,c]==0) 
                         return false;
 
