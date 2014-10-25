@@ -174,37 +174,37 @@ namespace CoolGameLibrary
             List<Point> TempLogIn = new List<Point>();
 
             for(int i = 0;i<map.GetLength(0);i++){
-                if ((map[i, 0] != 0) && (map[i, 1] != 0) && (map[i, 2] == 0))
+                if ((map[i, 0] == -1) && (map[i, 1] == -1) && (map[i, 2] == 0))
                     TempLogIn.Add(new Point((double)i, (double)2));
-                if ((map[i, 0] != 0) && (map[i, 1] == 0) && (map[i, 2] != 0))
+                if ((map[i, 0] == -1) && (map[i, 1] == 0) && (map[i, 2] == -1))
                     TempLogIn.Add(new Point((double)i, (double)1));
-                if ((map[i, 0] == 0) && (map[i, 1] != 0) && (map[i, 2] != 0))
+                if ((map[i, 0] == 0) && (map[i, 1] == -1) && (map[i, 2] == -1))
                     TempLogIn.Add(new Point((double)i, (double)0));
             }
 
             for (int i = 0; i < map.GetLength(0); i++)
             {
-                if ((map[0, i] != 0) && (map[1, i] != 0) && (map[2, i] == 0))
+                if ((map[0, i] == -1) && (map[1, i] == -1) && (map[2, i] == 0))
                     TempLogIn.Add(new Point((double)2, (double)i));
-                if ((map[0, i] != 0) && (map[1, i] == 0) && (map[2, i] != 0))
+                if ((map[0, i] == -1) && (map[1, i] == 0) && (map[2, i] == -1))
                     TempLogIn.Add(new Point((double)1, (double)i));
-                if ((map[0, i] == 0) && (map[1, i] != 0) && (map[2, i] != 0))
+                if ((map[0, i] == 0) && (map[1, i] == -1) && (map[2, i] == -1))
                     TempLogIn.Add(new Point((double)0, (double)i));
             }
 
-            if ((map[0, 0] != 0) && (map[1, 1] != 0) && (map[2, 2] == 0))
+            if ((map[0, 0] == -1) && (map[1, 1] == -1) && (map[2, 2] == 0))
                 TempLogIn.Add(new Point((double)2, (double)2));
-            if ((map[0, 0] != 0) && (map[1, 1] == 0) && (map[2, 2] != 0))
+            if ((map[0, 0] == -1) && (map[1, 1] == 0) && (map[2, 2] == -1))
                 TempLogIn.Add(new Point((double)1, (double)1));
-            if ((map[0, 0] == 0) && (map[1, 1] != 0) && (map[2, 2] != 0))
+            if ((map[0, 0] == 0) && (map[1, 1] == -1) && (map[2, 2] == -1))
                 TempLogIn.Add(new Point((double)0, (double)0));
 
 
-            if ((map[0, 2] != 0) && (map[1, 1] != 0) && (map[2, 0] == 0))
+            if ((map[0, 2] == -1) && (map[1, 1] == -1) && (map[2, 0] == 0))
                 TempLogIn.Add(new Point((double)2, (double)0));
-            if ((map[0, 2] != 0) && (map[1, 1] == 0) && (map[2, 0] != 0))
+            if ((map[0, 2] == -1) && (map[1, 1] == 0) && (map[2, 0] == -1))
                 TempLogIn.Add(new Point((double)1, (double)1));
-            if ((map[0, 2] == 0) && (map[1, 1] != 0) && (map[2, 0] != 0))
+            if ((map[0, 2] == 0) && (map[1, 1] == -1) && (map[2, 0] == -1))
                 TempLogIn.Add(new Point((double)0, (double)0));
 
             /*  ВОЗВРАТ КООРДИНАТЫ */
@@ -212,7 +212,9 @@ namespace CoolGameLibrary
             Random r = new Random();
             if (TempLogIn.Count > 0)
             {
-                if(r.Next(0,100) <=60){
+                if (r.Next(0, 100) <= 80)
+                {
+                    MessageBox.Show("asd");
                     newPoint = TempLogIn[r.Next(0, TempLogIn.Count - 1)];
                     map[(int)newPoint.X, (int)newPoint.Y] = -1;
                     return GetPoint(newPoint);
@@ -223,6 +225,7 @@ namespace CoolGameLibrary
                     map[(int)newPoint.X, (int)newPoint.Y] = -1;
                     return GetPoint(newPoint);
                 }
+                
             }
             else
             {
