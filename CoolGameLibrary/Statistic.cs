@@ -20,6 +20,10 @@ namespace CoolGameLibrary
         /// </summary>
         public int OverEase { get; set; }
         /// <summary>
+        /// Ничья в легком режиме
+        /// </summary>
+        public int DrawEase { get; set; }
+        /// <summary>
         /// Побед в среднем режиме
         /// </summary>
         public int WinNormal { get; set; }
@@ -28,6 +32,10 @@ namespace CoolGameLibrary
         /// </summary>
         public int OverNormal { get; set; }
         /// <summary>
+        /// Ничья в среднем режиме
+        /// </summary>
+        public int DrawNormal { get; set; }
+        /// <summary>
         /// Побед в сложном режиме
         /// </summary>
         public int WinHard { get; set; }
@@ -35,6 +43,10 @@ namespace CoolGameLibrary
         /// Проигрышей в сложном режиме
         /// </summary>
         public int OverHard { get; set; }
+        /// <summary>
+        /// Ничья в тяжелом режиме
+        /// </summary>
+        public int DrawHard { get; set; }
 
         /// <summary>
         /// Конструктор класса
@@ -46,8 +58,8 @@ namespace CoolGameLibrary
 
         public override string ToString()
         {
-            return string.Format("Побед в легком режиме: {0}\nПроигрышей в легком режиме : {1}\n-----------------------------\nПобед в среднем режиме: {2}\nПроигрышей в среднем режиме режиме : {2}\n-----------------------------\nПобед в тяжелом режиме: {4}\nПроигрышей в тяжелом режиме : {5}\n-----------------------------\n",
-                this.WinEase,this.OverEase,this.WinNormal,this.OverNormal,this.WinHard,this.OverHard);
+            return string.Format("----------Легкоий режим----------\nПобед:\t {0}\nПоражений:\t {1}\nНичья:\t {2}\n----------Cредний режим----------\nПобед:\t {3}\nПоражений: {4}\nНичья:\t {5}\n----------Тяжелый режим----------\nПобед:\t {6}\nПоражений:\t {7}\nНичья:\t {8}",
+                this.WinEase,this.OverEase,this.DrawEase,this.WinNormal,this.OverNormal,this.DrawNormal,this.WinHard,this.OverHard,this.DrawHard);
         }
     }
 }

@@ -415,10 +415,7 @@ namespace CoolGameLibrary
 
             using (Stream fstr = new FileStream("SaveStatistic.dat", FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                if (!File.Exists("SaveStatistic.dat"))
-                    binForm.Serialize(fstr, new Statistic());
-                else
-                    binForm.Serialize(fstr, obj);
+                binForm.Serialize(fstr, obj);
             }
         }
 
@@ -428,11 +425,16 @@ namespace CoolGameLibrary
         /// <returns>Объект статистики</returns>
         static public Statistic LoadStatistic()
         {
-            BinaryFormatter binForm = new BinaryFormatter();
-            using (Stream fstr = File.OpenRead("SaveStatistic.dat"))
+            if (File.Exists("SaveStatistic.dat"))
             {
-                return (Statistic)binForm.Deserialize(fstr);
+                BinaryFormatter binForm = new BinaryFormatter();
+                using (Stream fstr = File.OpenRead("SaveStatistic.dat"))
+                {
+                    return (Statistic)binForm.Deserialize(fstr);
+                }
             }
+            else
+                return new Statistic();
         }
     }
 }
