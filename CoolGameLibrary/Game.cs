@@ -411,11 +411,15 @@ namespace CoolGameLibrary
         /// <param name="obj">Объект статистики</param>
         static public void SaveStatistic(Statistic obj)
         {
-                BinaryFormatter binForm = new BinaryFormatter();
-                using (Stream fstr = new FileStream("SaveStatistic.dat",FileMode.Create,FileAccess.Write,FileShare.None))
-                {
-                    binForm.Serialize(fstr,obj);
-                }
+            BinaryFormatter binForm = new BinaryFormatter();
+
+            using (Stream fstr = new FileStream("SaveStatistic.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                if (!File.Exists("SaveStatistic.dat"))
+                    binForm.Serialize(fstr, new Statistic());
+                else
+                    binForm.Serialize(fstr, obj);
+            }
         }
 
         /// <summary>
