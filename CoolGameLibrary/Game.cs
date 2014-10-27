@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
  
 namespace CoolGameLibrary
@@ -401,6 +403,32 @@ namespace CoolGameLibrary
                         return false;
 
             return true;
+        }
+
+        /// <summary>
+        /// Сериализует объект статистики в файл
+        /// </summary>
+        /// <param name="obj">Объект статистики</param>
+        static public void SaveStatistic(Statistic obj)
+        {
+                BinaryFormatter binForm = new BinaryFormatter();
+                using (Stream fstr = new FileStream("SaveStatistic.dat",FileMode.Create,FileAccess.Write,FileShare.None))
+                {
+                    binForm.Serialize(fstr,obj);
+                }
+        }
+
+        /// <summary>
+        /// Десериализация статистика в объект
+        /// </summary>
+        /// <returns>Объект статистики</returns>
+        static public Statistic LoadStatistic()
+        {
+            BinaryFormatter binForm = new BinaryFormatter();
+            using (Stream fstr = File.OpenRead("SaveStatistic.dat"))
+            {
+                return (Statistic)binForm.Deserialize(fstr);
+            }
         }
     }
 }
