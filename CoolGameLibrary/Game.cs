@@ -135,7 +135,7 @@ namespace CoolGameLibrary
         }
 
         /// <summary>
-        /// Поиск случайно не занятой позиции на игровой карте(3 на 3)
+        /// Легкая сложность - Поиск случайно не занятой позиции на игровой карте(3 на 3)
         /// </summary>
         /// <param name="map">Игровая карта(3 на 3)</param>
         /// <returns>Координаты для вставки картинки</returns>
@@ -157,7 +157,7 @@ namespace CoolGameLibrary
         }
 
         /// <summary>
-        /// Поиск случайной или НЕ случайно позиции на игровой карте (3 на 3)
+        /// Средняя сложность - Поиск случайной или НЕ случайно позиции на игровой карте (3 на 3)
         /// </summary>
         /// <param name="map">Игровая карта(3 на 3)</param>
         /// <returns>Координаты для вставки картинки</returns>
@@ -178,6 +178,52 @@ namespace CoolGameLibrary
             CheckGameMapOnWinTach(-1, ref TempCompLogIn, map);
             CheckGameMapOnWinTach(1, ref TempUserLogIn, map);
             
+
+            /*  ВОЗВРАТ КООРДИНАТЫ */
+            Point newPoint;
+            Random r = new Random();
+            if (TempUserLogIn.Count > 0 && r.Next(0,100)<=65)
+            {
+                newPoint = TempUserLogIn[r.Next(0, TempUserLogIn.Count - 1)];
+                map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                return GetPoint(newPoint);
+            }
+            else if (TempCompLogIn.Count > 0 && r.Next(0, 100) <= 65)
+            {
+                newPoint = TempCompLogIn[r.Next(0, TempCompLogIn.Count - 1)];
+                map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                return GetPoint(newPoint);
+            }
+            else
+            {
+                newPoint = TempRandIn[r.Next(0, TempRandIn.Count - 1)];
+                map[(int)newPoint.X, (int)newPoint.Y] = -1;
+                return GetPoint(newPoint);
+            }
+        }
+
+        /// <summary>
+        /// Трудная сложность - Поиск случайной или НЕ случайно позиции на игровой карте (3 на 3)
+        /// </summary>
+        /// <param name="map">Игровая карта(3 на 3)</param>
+        /// <returns>Координаты для вставки картинки</returns>
+        static public Point HardComputerRun(ref int[,] map)
+        {
+            /*  ВСЕ ПУСТЫЕ  */
+            List<Point> TempRandIn = new List<Point>();
+
+            for (int a = 0; a < map.GetLength(0); a++)
+                for (int b = 0; b < map.GetLength(1); b++)
+                    if (map[a, b] == 0)
+                        // Добавить во временной индексатор
+                        TempRandIn.Add(new Point((double)a, (double)b));
+
+            /*  ЛОГИКА  */
+            List<Point> TempCompLogIn = new List<Point>();
+            List<Point> TempUserLogIn = new List<Point>();
+            CheckGameMapOnWinTach(-1, ref TempCompLogIn, map);
+            CheckGameMapOnWinTach(1, ref TempUserLogIn, map);
+
 
             /*  ВОЗВРАТ КООРДИНАТЫ */
             Point newPoint;
@@ -412,11 +458,21 @@ namespace CoolGameLibrary
         static public void SaveStatistic(Statistic obj)
         {
             BinaryFormatter binForm = new BinaryFormatter();
-
-            using (Stream fstr = new FileStream("SaveStatistic.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+            if (!File.Exists("SaveStatistic.dat"))
             {
-                binForm.Serialize(fstr, obj);
+                using (Stream fstr = new FileStream("SaveStatistic.dat", FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    binForm.Serialize(fstr, obj);
+                }
             }
+            else
+            {
+                using (Stream fstr = new FileStream("SaveStatistic.dat", FileMode.Open, FileAccess.Write, FileShare.None))
+                {
+                    binForm.Serialize(fstr, obj);
+                }
+            }
+            
         }
 
         /// <summary>

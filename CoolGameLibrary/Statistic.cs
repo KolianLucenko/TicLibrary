@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoolGameLibrary
 {
+    [Serializable]
     /// <summary>
     /// Класс для содержания в себе статистики игрока
     /// </summary>
@@ -58,7 +59,7 @@ namespace CoolGameLibrary
 
         public override string ToString()
         {
-            return string.Format("----------Легкоий режим----------\nПобед:\t {0}\nПоражений:\t {1}\nНичья:\t {2}\n----------Cредний режим----------\nПобед:\t {3}\nПоражений: {4}\nНичья:\t {5}\n----------Тяжелый режим----------\nПобед:\t {6}\nПоражений:\t {7}\nНичья:\t {8}",
+            return string.Format("----------Легкоий режим----------\nПобед:               {0}\nПоражений:         {1}\nНичья:               {2}\n----------Cредний режим----------\nПобед:               {3}\nПоражений:         {4}\nНичья:               {5}\n----------Тяжелый режим----------\nПобед:               {6}\nПоражений:         {7}\nНичья:               {8}",
                 this.WinEase,this.OverEase,this.DrawEase,this.WinNormal,this.OverNormal,this.DrawNormal,this.WinHard,this.OverHard,this.DrawHard);
         }
     }
